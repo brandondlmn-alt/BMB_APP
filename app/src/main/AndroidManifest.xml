@@ -30,5 +30,6 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".CarsActivity" />
         <activity android:name=".BookingActivity" />
+        <activity android:name=".BookingsActivity" />
     </application>
 </manifest>
