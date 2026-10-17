@@ -6,8 +6,9 @@
     android:layout_height="match_parent"
     android:background="#F8FAFC"
     android:padding="24dp"
-    tools:context="LoginActivity">
+    tools:context=".LoginActivity">
 
+    <!-- Logo / Title Area -->
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
@@ -33,6 +34,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
+    <!-- Email Input -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilEmail"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -49,6 +51,7 @@
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- Password Input -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilPassword"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -66,6 +69,7 @@
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- Standard Login Button -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
@@ -77,6 +81,7 @@
         app:cornerRadius="12dp"
         app:layout_constraintTop_toBottomOf="@id/tilPassword" />
 
+    <!-- Loading Spinner (Hidden by default) -->
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
@@ -87,7 +92,21 @@
         app:layout_constraintStart_toStartOf="@id/btnLogin"
         app:layout_constraintTop_toTopOf="@id/btnLogin" />
 
-    <!-- Tap this text to switch servers -->
+    <!-- Google SSO Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnGoogleSSO"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="16dp"
+        android:text="Sign in with Google"
+        android:textColor="#DB4437"
+        android:backgroundTint="#FFFFFF"
+        app:strokeColor="#DB4437"
+        app:strokeWidth="2dp"
+        app:cornerRadius="12dp"
+        app:layout_constraintTop_toBottomOf="@id/btnLogin" />
+
+    <!-- Server Switcher Text (Tap to change IP) -->
     <TextView
         android:id="@+id/tvServerSettings"
         android:layout_width="wrap_content"
@@ -99,6 +118,6 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnLogin" />
+        app:layout_constraintTop_toBottomOf="@id/btnGoogleSSO" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
