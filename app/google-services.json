@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "84226084624",
+    "project_id": "bmb-autos-app",
+    "storage_bucket": "bmb-autos-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:84226084624:android:f2fbe00214803767645f95",
+        "android_client_info": {
+          "package_name": "com.example.bmbautos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "84226084624-q773n6kaoaqqcicv61e6ej0g0rm3c5vn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bmbautos",
+            "certificate_hash": "4301fdd49f9a53e0c8d9f98aec17973c949ac7fb"
+          }
+        },
+        {
+          "client_id": "84226084624-ch3mc9e66m4751drht9stmd2aaic11vv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3Doc0Cz8_RmsV5wNxIZ_NYN4EWnDEUiM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "84226084624-a2dhnnahhoved6ro1kas1fp3a4s550tu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
