@@ -19,20 +19,17 @@ data class CarsResponse(val status: String, val count: Int, val data: List<Car>)
 data class BookingRequest(val service_type: String, val vehicle: String, val date: String, val time: String)
 data class GenericResponse(val status: String, val message: String)
 
-data class Booking(
-    val id: Int,
-    val vehicle_info: String,
-    val service_type: String,
-    val booking_date: String,
-    val booking_time: String,
-    val status: String
-)
+data class Booking(val id: Int, val vehicle_info: String, val service_type: String, val booking_date: String, val booking_time: String, val status: String)
 data class BookingsResponse(val status: String, val data: List<Booking>)
 
 // --- API Interface ---
 interface ApiService {
     @POST("login.php")
     suspend fun login(@Body request: LoginRequest): Response<LoginResponse>
+
+    // THIS IS THE LINE YOU WERE MISSING:
+    @POST("sso_login.php")
+    suspend fun ssoLogin(@Body request: Map<String, String>): Response<LoginResponse>
 
     @GET("cars.php")
     suspend fun getCars(): Response<CarsResponse>
