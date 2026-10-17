@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_profile -> {
-                    logout()
+                    startActivity(Intent(this, SettingsActivity::class.java))
                     true
                 }
                 else -> false

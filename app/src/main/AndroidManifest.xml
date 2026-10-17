@@ -32,5 +32,6 @@
         <activity android:name=".BookingActivity" />
         <activity android:name=".BookingsActivity" />
         <activity android:name=".TradeInActivity" />
+        <activity android:name=".SettingsActivity" />
     </application>
 </manifest>

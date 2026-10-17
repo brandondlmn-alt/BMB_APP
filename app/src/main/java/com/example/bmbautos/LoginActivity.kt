@@ -160,6 +160,7 @@ class LoginActivity : AppCompatActivity() {
         sharedPref.edit().apply {
             putString("API_TOKEN", token)
             putString("USER_NAME", user?.name)
+            putString("USER_EMAIL", user?.email)
             putString("USER_ROLE", user?.role)
             apply()
         }

@@ -29,6 +29,14 @@ data class TradeInRequest(
     val type: String
 )
 
+//Settings & Profile
+data class UpdateProfileRequest(
+    val name: String,
+    val email: String,
+    val notify_email: Int,
+    val notify_push: Int
+)
+
 // --- Generic Response (used for Bookings and Trade-Ins) ---
 data class GenericResponse(val status: String, val message: String)
 
@@ -65,5 +73,12 @@ interface ApiService {
     suspend fun createTradeIn(
         @Header("Authorization") token: String,
         @Body request: TradeInRequest
+    ): Response<GenericResponse>
+
+    //Settings & Profile
+    @POST("update_profile.php")
+    suspend fun updateProfile(
+        @Header("Authorization") token: String,
+        @Body request: UpdateProfileRequest
     ): Response<GenericResponse>
 }
