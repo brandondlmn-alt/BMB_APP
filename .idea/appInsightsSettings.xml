@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.example.bmbautos" />
+                  <option name="mobileSdkAppId" value="1:84226084624:android:f2fbe00214803767645f95" />
+                  <option name="projectId" value="bmb-autos-app" />
+                  <option name="projectNumber" value="84226084624" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

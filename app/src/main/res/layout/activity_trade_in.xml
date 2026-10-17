@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8FAFC"
+    android:padding="24dp">
+
+    <TextView
+        android:id="@+id/tvHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sell Your Car"
+        android:textColor="#1E3A8A"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Submit your vehicle for a certified evaluation."
+        android:textColor="#64748B"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvHeader" />
+
+    <!-- Make Input -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilMake"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:hint="Make (e.g. Toyota)"
+        app:layout_constraintTop_toBottomOf="@id/tvHeader">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etMake"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Model Input -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilModel"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Model (e.g. Hilux)"
+        app:layout_constraintTop_toBottomOf="@id/tilMake">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etModel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Year Input -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilYear"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Year (e.g. 2021)"
+        app:layout_constraintTop_toBottomOf="@id/tilModel">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etYear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Price Input -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilPrice"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Asking Price (e.g. R 350,000)"
+        app:layout_constraintTop_toBottomOf="@id/tilYear">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Type Dropdown -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Vehicle Type"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tilPrice" />
+
+    <Spinner
+        android:id="@+id/spinnerType"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:drawable/btn_dropdown"
+        app:layout_constraintTop_toBottomOf="@id/tilPrice" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="32dp"
+        android:text="Submit for Evaluation"
+        android:backgroundTint="#1E3A8A"
+        app:cornerRadius="12dp"
+        app:layout_constraintTop_toBottomOf="@id/spinnerType" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/btnSubmit"
+        app:layout_constraintEnd_toEndOf="@id/btnSubmit"
+        app:layout_constraintStart_toStartOf="@id/btnSubmit"
+        app:layout_constraintTop_toTopOf="@id/btnSubmit" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

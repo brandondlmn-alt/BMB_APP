@@ -31,7 +31,9 @@ class MainActivity : AppCompatActivity() {
 
         // 3. Trade-In
         findViewById<MaterialCardView>(R.id.cardTradeIn).setOnClickListener {
-            Toast.makeText(this, "Trade-In coming soon", Toast.LENGTH_SHORT).show()
+            findViewById<MaterialCardView>(R.id.cardTradeIn).setOnClickListener {
+                startActivity(Intent(this, TradeInActivity::class.java))
+            }
         }
 
         // 4. View History

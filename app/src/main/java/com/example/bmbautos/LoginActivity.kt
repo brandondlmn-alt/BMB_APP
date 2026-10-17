@@ -17,7 +17,6 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.launch
-import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
 
@@ -53,7 +52,7 @@ class LoginActivity : AppCompatActivity() {
 
         // Configure Google Sign In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("84226084624-ch3mc9e66m4751drht9stmd2aaic11vv.apps.googleusercontent.com")// Firebase handles this automatically
+            .requestIdToken("84226084624-ch3mc9e66m4751drht9stmd2aaic11vv.apps.googleusercontent.com")
             .requestEmail()
             .build()
         googleSignInClient = GoogleSignIn.getClient(this, gso)
@@ -103,7 +102,6 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     val user = auth.currentUser
                     if (user != null) {
-                        // Send verified data to PHP API
                         sendGoogleDataToBackend(user.email ?: "", user.displayName ?: "Google User", user.uid)
                     }
                 } else {
@@ -117,10 +115,7 @@ class LoginActivity : AppCompatActivity() {
     private fun sendGoogleDataToBackend(email: String, name: String, googleId: String) {
         lifecycleScope.launch {
             try {
-                // Reusing a generic map for the request body
                 val requestBody = mapOf("email" to email, "name" to name, "google_id" to googleId)
-
-                // We need to add an endpoint to ApiService for this!
                 val response = ApiClient.getApi().ssoLogin(requestBody)
 
                 if (response.isSuccessful && response.body()?.status == "success") {
@@ -176,14 +171,27 @@ class LoginActivity : AppCompatActivity() {
         tvServerSettings.text = "Current Server:\n${ApiClient.currentBaseUrl}\n(Tap to change)"
     }
 
+    // --- UPDATED SERVER DIALOG FOR NGROK ---
     private fun showServerDialog() {
-        val servers = arrayOf("VM Emulator (10.0.2.2)", "Native PC (192.168.0.188)")
+        val servers = arrayOf(
+            "VM Emulator (10.0.2.2)",
+            "Ngrok Tunnel (Physical Phone)",
+            "Native PC (192.168.0.188)"
+        )
+
         AlertDialog.Builder(this)
             .setTitle("Select API Server")
             .setItems(servers) { _, which ->
-                val newUrl = if (which == 0) "http://10.0.2.2/BMB_AUTOS/api/" else "http://192.168.0.188/BMB_AUTOS/api/"
+                val newUrl = when (which) {
+                    0 -> "http://10.0.2.2/BMB_AUTOS/api/"
+                    1 -> "https://abstain-sixfold-nervy.ngrok-free.dev/BMB_AUTOS/api/"
+                    2 -> "http://192.168.0.188/BMB_AUTOS/api/"
+                    else -> "http://10.0.2.2/BMB_AUTOS/api/"
+                }
+
                 ApiClient.changeUrl(this, newUrl)
                 updateServerText()
+                Toast.makeText(this, "Server switched!", Toast.LENGTH_SHORT).show()
             }.show()
     }
 }
