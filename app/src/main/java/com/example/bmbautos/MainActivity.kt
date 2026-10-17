@@ -22,13 +22,15 @@ class MainActivity : AppCompatActivity() {
 
         // 2. Handle Quick Action Clicks
         findViewById<MaterialCardView>(R.id.cardBrowse).setOnClickListener {
-            Toast.makeText(this, "Opening Showroom...", Toast.LENGTH_SHORT).show()
-            // Later: startActivity(Intent(this, CarsActivity::class.java))
+            // Navigate to the Showroom (CarsActivity)
+            val intent = Intent(this, CarsActivity::class.java)
+            startActivity(intent)
         }
 
         findViewById<MaterialCardView>(R.id.cardService).setOnClickListener {
-            Toast.makeText(this, "Opening Service Booking...", Toast.LENGTH_SHORT).show()
-            // Later: startActivity(Intent(this, BookingActivity::class.java))
+            // Navigate to the Service Booking Form (BookingActivity)
+            val intent = Intent(this, BookingActivity::class.java)
+            startActivity(intent)
         }
 
         findViewById<MaterialCardView>(R.id.cardTradeIn).setOnClickListener {
@@ -64,11 +66,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun logout() {
-        // Clear the token and user data
+        // Clear the token and user data so they have to log in again
         val sharedPref = getSharedPreferences("BMB_PREFS", MODE_PRIVATE)
         sharedPref.edit().clear().apply()
 
-        // Go back to Login screen
+        // Go back to Login screen and close the dashboard
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
         finish()
