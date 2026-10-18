@@ -25,11 +25,10 @@ class BookingAdapter(private val bookingList: List<Booking>) : RecyclerView.Adap
 
         holder.tvServiceType.text = booking.service_type
         holder.tvStatus.text = booking.status.uppercase()
-        holder.tvVehicle.text = "Vehicle: ${booking.vehicle_info}"
+        holder.tvVehicle.text = String.format("Vehicle: %s", booking.vehicle_info)
 
-        // Format the time (e.g., "14:30:00" -> "14:30")
         val shortTime = if (booking.booking_time.length >= 5) booking.booking_time.substring(0, 5) else booking.booking_time
-        holder.tvDateTime.text = "Date: ${booking.booking_date} at $shortTime"
+        holder.tvDateTime.text = String.format("Date: %s at %s", booking.booking_date, shortTime)
     }
 
     override fun getItemCount() = bookingList.size

@@ -71,11 +71,16 @@ class CarsActivity : AppCompatActivity() {
                 val response = ApiClient.getApi().purchaseCar("Bearer $token", PurchaseRequest(car.id, car.price))
 
                 if (response.isSuccessful && response.body()?.status == "success") {
-                    Toast.makeText(this@CarsActivity, "Purchase Successful!", Toast.LENGTH_LONG).show()
+
+                    // SHOW THE NOTIFICATIONS
+                    NotificationHelper.showSuccessDialog(this@CarsActivity, "Purchase Successful!", "You are now the proud owner of a ${car.make} ${car.model}.")
+                    NotificationHelper.showSystemNotification(this@CarsActivity, "Purchase Complete", "Congratulations on your new ${car.make} ${car.model}!")
+
                     fetchCars() // Reload the list to show it is Sold
                 } else {
-                    // THIS WILL SHOW THE EXACT DATABASE ERROR
-                    Toast.makeText(this@CarsActivity, "Failed: ${response.body()?.message}", Toast.LENGTH_LONG).show()
+                    val errorBody = response.errorBody()?.string()
+                    val errorMsg = if (errorBody.isNullOrEmpty()) "Unknown Error (Code: ${response.code()})" else errorBody
+                    Toast.makeText(this@CarsActivity, "Failed: $errorMsg", Toast.LENGTH_LONG).show()
                 }
             } catch (e: Exception) {
                 Toast.makeText(this@CarsActivity, "Network Error: ${e.message}", Toast.LENGTH_SHORT).show()

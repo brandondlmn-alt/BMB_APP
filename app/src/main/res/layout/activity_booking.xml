@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F8FAFC"
@@ -13,7 +14,6 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Book a Service"
@@ -29,17 +29,22 @@
             android:text="Schedule a maintenance or evaluation."
             android:textColor="#64748B" />
 
+        <!-- FIXED VEHICLE DROPDOWN -->
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Vehicle (e.g. 2021 VW Polo)">
-            <com.google.android.material.textfield.TextInputEditText
+            android:hint="Select Your Vehicle">
+            <AutoCompleteTextView
                 android:id="@+id/etVehicle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:hint=" "
+                android:inputType="none"
+                tools:ignore="LabelFor" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- FIXED SERVICE DROPDOWN -->
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
@@ -50,7 +55,9 @@
                 android:id="@+id/spinnerService"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none" />
+                android:hint=" "
+                android:inputType="none"
+                tools:ignore="LabelFor" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout

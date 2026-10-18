@@ -113,4 +113,9 @@ interface ApiService {
     suspend fun getMyPurchases(
         @Header("Authorization") token: String
     ): Response<PurchasesResponse>
+
+    @GET("get_my_cars.php")
+    suspend fun getMyCars(
+        @Header("Authorization") token: String
+    ): Response<CarsResponse>
 }

@@ -5,6 +5,7 @@ import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
@@ -12,10 +13,9 @@ import java.util.Calendar
 
 class BookingActivity : AppCompatActivity() {
 
-    private lateinit var etVehicle: EditText
+    private lateinit var etVehicle: AutoCompleteTextView
     private lateinit var etDate: EditText
     private lateinit var etTime: EditText
-    // CHANGED: Now an AutoCompleteTextView instead of Spinner
     private lateinit var spinnerService: AutoCompleteTextView
     private lateinit var btnSubmit: Button
     private lateinit var progressBar: ProgressBar
@@ -31,42 +31,31 @@ class BookingActivity : AppCompatActivity() {
         btnSubmit = findViewById(R.id.btnSubmit)
         progressBar = findViewById(R.id.progressBar)
 
-        // CHANGED: Setup the modern dropdown menu
+        // Setup Service dropdown
         val services = arrayOf(
             "Pre-Sale Evaluation", "Oil & Filter Service",
             "Brake Inspection", "Major Diagnostic", "Suspension Check"
         )
-        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, services)
-        spinnerService.setAdapter(adapter)
+        spinnerService.setAdapter(ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, services))
 
-        // Show Calendar popup when Date field is clicked
+        // Fetch User's Vehicles
+        fetchUserVehicles()
+
+        // Date Picker
         etDate.setOnClickListener {
             val c = Calendar.getInstance()
-            val year = c.get(Calendar.YEAR)
-            val month = c.get(Calendar.MONTH)
-            val day = c.get(Calendar.DAY_OF_MONTH)
-
             val datePicker = DatePickerDialog(this, { _, y, m, d ->
-                // Format as YYYY-MM-DD for the API
-                val formattedMonth = String.format("%02d", m + 1)
-                val formattedDay = String.format("%02d", d)
-                etDate.setText("$y-$formattedMonth-$formattedDay")
-            }, year, month, day)
+                etDate.setText(String.format("%04d-%02d-%02d", y, m + 1, d))
+            }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH))
             datePicker.show()
         }
 
-        // Show Time popup when Time field is clicked
+        // Time Picker
         etTime.setOnClickListener {
             val c = Calendar.getInstance()
-            val hour = c.get(Calendar.HOUR_OF_DAY)
-            val minute = c.get(Calendar.MINUTE)
-
             val timePicker = TimePickerDialog(this, { _, h, m ->
-                // Format as HH:MM:00 for the API
-                val formattedHour = String.format("%02d", h)
-                val formattedMinute = String.format("%02d", m)
-                etTime.setText("$formattedHour:$formattedMinute:00")
-            }, hour, minute, true)
+                etTime.setText(String.format("%02d:%02d:00", h, m))
+            }, c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), true)
             timePicker.show()
         }
 
@@ -74,7 +63,6 @@ class BookingActivity : AppCompatActivity() {
             val vehicle = etVehicle.text.toString().trim()
             val date = etDate.text.toString().trim()
             val time = etTime.text.toString().trim()
-            // CHANGED: Get text from AutoCompleteTextView
             val serviceType = spinnerService.text.toString()
 
             if (vehicle.isEmpty() || date.isEmpty() || time.isEmpty() || serviceType.isEmpty()) {
@@ -86,24 +74,65 @@ class BookingActivity : AppCompatActivity() {
         }
     }
 
+    private fun fetchUserVehicles() {
+        progressBar.visibility = View.VISIBLE
+        val sharedPref = getSharedPreferences("BMB_PREFS", MODE_PRIVATE)
+        val token = sharedPref.getString("API_TOKEN", "") ?: ""
+
+        lifecycleScope.launch {
+            try {
+                val response = ApiClient.getApi().getMyCars("Bearer $token")
+                if (response.isSuccessful && response.body()?.status == "success") {
+                    val myCars = response.body()?.data ?: emptyList()
+
+                    if (myCars.isEmpty()) {
+                        // USER HAS NO CARS -> SHOW ERROR AND KICK THEM OUT
+                        AlertDialog.Builder(this@BookingActivity)
+                            .setTitle("No Vehicle Found")
+                            .setMessage("You have no vehicles registered for booking. Please purchase a vehicle from our showroom or register your vehicle with us via the Trade-In feature.")
+                            .setPositiveButton("OK") { _, _ ->
+                                finish() // Close the booking screen
+                            }
+                            .setCancelable(false)
+                            .show()
+                    } else {
+                        // USER HAS CARS -> POPULATE THE DROPDOWN
+                        val carNames = myCars.map { "${it.year} ${it.make} ${it.model}" }.toTypedArray()
+                        val adapter = ArrayAdapter(this@BookingActivity, android.R.layout.simple_dropdown_item_1line, carNames)
+                        etVehicle.setAdapter(adapter)
+                    }
+                } else {
+                    Toast.makeText(this@BookingActivity, "Failed to load your vehicles", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(this@BookingActivity, "Network Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            } finally {
+                progressBar.visibility = View.GONE
+            }
+        }
+    }
+
     private fun submitBooking(vehicle: String, date: String, time: String, service: String) {
         progressBar.visibility = View.VISIBLE
         btnSubmit.text = ""
 
-        // Get the token we saved during login
         val sharedPref = getSharedPreferences("BMB_PREFS", MODE_PRIVATE)
         val token = sharedPref.getString("API_TOKEN", "") ?: ""
 
         lifecycleScope.launch {
             try {
                 val request = BookingRequest(service, vehicle, date, time)
-
-                // Pass the Bearer token in the header
                 val response = ApiClient.getApi().createBooking("Bearer $token", request)
 
                 if (response.isSuccessful && response.body()?.status == "success") {
-                    Toast.makeText(this@BookingActivity, "Booking Confirmed!", Toast.LENGTH_LONG).show()
-                    finish() // Go back to the dashboard
+                    NotificationHelper.showSuccessDialog(
+                        this@BookingActivity,
+                        "Booking Confirmed!",
+                        "Your $service has been scheduled for $date at $time."
+                    ) {
+                        finish()
+                    }
+                    NotificationHelper.showSystemNotification(this@BookingActivity, "Service Booked", "Your appointment for $date is confirmed.")
                 } else {
                     Toast.makeText(this@BookingActivity, "Failed: ${response.body()?.message}", Toast.LENGTH_SHORT).show()
                 }
