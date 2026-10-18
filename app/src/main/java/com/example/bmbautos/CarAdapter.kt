@@ -3,19 +3,25 @@ package com.example.bmbautos
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-class CarAdapter(private val carList: List<Car>) : RecyclerView.Adapter<CarAdapter.CarViewHolder>() {
+class CarAdapter(
+    private var carList: List<Car>,
+    private val onBuyClick: (Car) -> Unit
+) : RecyclerView.Adapter<CarAdapter.CarViewHolder>() {
 
     class CarViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imgCar: ImageView = itemView.findViewById(R.id.imgCar)
+        val tvStockNumber: TextView = itemView.findViewById(R.id.tvStockNumber)
         val tvCarName: TextView = itemView.findViewById(R.id.tvCarName)
         val tvCarPrice: TextView = itemView.findViewById(R.id.tvCarPrice)
         val tvCarMileage: TextView = itemView.findViewById(R.id.tvCarMileage)
         val tvCarStatus: TextView = itemView.findViewById(R.id.tvCarStatus)
+        val btnBuy: Button = itemView.findViewById(R.id.btnBuy)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CarViewHolder {
@@ -26,17 +32,26 @@ class CarAdapter(private val carList: List<Car>) : RecyclerView.Adapter<CarAdapt
     override fun onBindViewHolder(holder: CarViewHolder, position: Int) {
         val car = carList[position]
 
+        holder.tvStockNumber.text = car.stock_number
         holder.tvCarName.text = "${car.year} ${car.make} ${car.model}"
         holder.tvCarPrice.text = car.price
-        holder.tvCarMileage.text = "Mileage: ${car.mileage}"
+        holder.tvCarMileage.text = String.format("Mileage: %s", car.mileage)
         holder.tvCarStatus.text = car.status
 
-        // Load image from URL using Glide
         Glide.with(holder.itemView.context)
             .load(car.image)
-            .placeholder(android.R.drawable.ic_menu_gallery) // Shows while loading
+            .placeholder(android.R.drawable.ic_menu_gallery)
             .into(holder.imgCar)
+
+        holder.btnBuy.setOnClickListener {
+            onBuyClick(car)
+        }
     }
 
     override fun getItemCount() = carList.size
+
+    fun updateList(newList: List<Car>) {
+        carList = newList
+        notifyDataSetChanged()
+    }
 }

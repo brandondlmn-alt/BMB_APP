@@ -19,35 +19,34 @@ class MainActivity : AppCompatActivity() {
         val tvWelcome = findViewById<TextView>(R.id.tvWelcome)
         tvWelcome.text = "Welcome back,\n$userName"
 
-        // 1. Browse Cars
         findViewById<MaterialCardView>(R.id.cardBrowse).setOnClickListener {
             startActivity(Intent(this, CarsActivity::class.java))
         }
 
-        // 2. Service Booking
         findViewById<MaterialCardView>(R.id.cardService).setOnClickListener {
             startActivity(Intent(this, BookingActivity::class.java))
         }
 
-        // 3. Trade-In
+        // FIXED TRADE-IN BUG
         findViewById<MaterialCardView>(R.id.cardTradeIn).setOnClickListener {
-            findViewById<MaterialCardView>(R.id.cardTradeIn).setOnClickListener {
-                startActivity(Intent(this, TradeInActivity::class.java))
-            }
+            startActivity(Intent(this, TradeInActivity::class.java))
         }
 
-        // 4. View History
         findViewById<MaterialCardView>(R.id.cardHistory).setOnClickListener {
             startActivity(Intent(this, BookingsActivity::class.java))
         }
 
-        // Bottom Navigation
+        // NEW PURCHASES BUTTON
+        findViewById<MaterialCardView>(R.id.cardPurchases).setOnClickListener {
+            startActivity(Intent(this, PurchasesActivity::class.java))
+        }
+
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
         bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> true
                 R.id.nav_search -> {
-                    Toast.makeText(this, "Search coming soon", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this, CarsActivity::class.java))
                     true
                 }
                 R.id.nav_bookings -> {
@@ -61,13 +60,5 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
-    }
-
-    private fun logout() {
-        val sharedPref = getSharedPreferences("BMB_PREFS", MODE_PRIVATE)
-        sharedPref.edit().clear().apply()
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
-        finish()
     }
 }

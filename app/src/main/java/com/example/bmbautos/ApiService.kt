@@ -13,13 +13,37 @@ data class User(val id: Int, val name: String, val email: String, val role: Stri
 data class LoginResponse(val status: String, val message: String, val token: String?, val user: User?)
 
 // --- Car Models ---
-data class Car(val id: Int, val make: String, val model: String, val year: Int, val price: String, val mileage: String, val image: String, val status: String)
+data class Car(
+    val id: Int,
+    val stock_number: String,
+    val make: String,
+    val model: String,
+    val year: Int,
+    val price: String,
+    val mileage: String,
+    val image: String,
+    val status: String
+)
 data class CarsResponse(val status: String, val count: Int, val data: List<Car>)
 
 // --- Booking Models ---
 data class BookingRequest(val service_type: String, val vehicle: String, val date: String, val time: String)
 data class Booking(val id: Int, val vehicle_info: String, val service_type: String, val booking_date: String, val booking_time: String, val status: String)
 data class BookingsResponse(val status: String, val data: List<Booking>)
+
+// --- Purchase Models ---
+data class PurchaseRequest(val car_id: Int, val amount: String)
+data class Purchase(
+    val transaction_id: Int,
+    val amount: String,
+    val created_at: String,
+    val stock_number: String,
+    val make: String,
+    val model: String,
+    val year: Int,
+    val image: String
+)
+data class PurchasesResponse(val status: String, val data: List<Purchase>)
 
 // --- Trade-In Models ---
 data class TradeInRequest(
@@ -78,4 +102,15 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Body request: UpdateProfileRequest
     ): Response<GenericResponse>
+
+    @POST("purchase_car.php")
+    suspend fun purchaseCar(
+        @Header("Authorization") token: String,
+        @Body request: PurchaseRequest
+    ): Response<GenericResponse>
+
+    @GET("get_purchases.php")
+    suspend fun getMyPurchases(
+        @Header("Authorization") token: String
+    ): Response<PurchasesResponse>
 }

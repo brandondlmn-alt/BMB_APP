@@ -101,18 +101,24 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="-40dp"/>
 
-                    <!-- Google SSO Button -->
+                    <!-- Modern Google SSO Button -->
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnGoogleSSO"
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
                         android:layout_marginTop="16dp"
                         android:text="Sign in with Google"
-                        android:textColor="#DB4437"
+                        android:textColor="#3C4043"
+                        android:textAllCaps="false"
+                        android:textSize="16sp"
                         android:backgroundTint="@color/white"
-                        app:strokeColor="#DB4437"
-                        app:strokeWidth="2dp"
-                        app:cornerRadius="12dp" />
+                        app:strokeColor="#DADCE0"
+                        app:strokeWidth="1dp"
+                        app:cornerRadius="12dp"
+                        app:icon="@drawable/ic_google_logo"
+                        app:iconTint="@null"
+                        app:iconGravity="textStart"
+                        app:iconPadding="12dp" />
 
                     <TextView
                         android:id="@+id/tvCreateAccount"

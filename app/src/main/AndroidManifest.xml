@@ -34,5 +34,6 @@
         <activity android:name=".TradeInActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".RegisterActivity" />
+        <activity android:name=".PurchasesActivity" />
     </application>
 </manifest>
