@@ -1,102 +1,111 @@
 package com.example.bmbautos
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.materialswitch.MaterialSwitch
+import com.example.bmbautos.databinding.ActivitySettingsBinding
 import kotlinx.coroutines.launch
 
 class SettingsActivity : AppCompatActivity() {
 
-    private lateinit var etName: EditText
-    private lateinit var etEmail: EditText
-    private lateinit var switchEmail: MaterialSwitch
-    private lateinit var switchPush: MaterialSwitch
-    private lateinit var btnSave: Button
-    private lateinit var btnLogout: Button
-    private lateinit var progressBar: ProgressBar
+    private lateinit var binding: ActivitySettingsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
+        binding = ActivitySettingsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        etName = findViewById(R.id.etName)
-        etEmail = findViewById(R.id.etEmail)
-        switchEmail = findViewById(R.id.switchEmail)
-        switchPush = findViewById(R.id.switchPush)
-        btnSave = findViewById(R.id.btnSave)
-        btnLogout = findViewById(R.id.btnLogout)
-        progressBar = findViewById(R.id.progressBar)
+        val sharedPref = getSharedPreferences("BMB_PREFS", Context.MODE_PRIVATE)
 
-        // Load current user data from SharedPreferences
-        val sharedPref = getSharedPreferences("BMB_PREFS", MODE_PRIVATE)
-        etName.setText(sharedPref.getString("USER_NAME", ""))
-        etEmail.setText(sharedPref.getString("USER_EMAIL", "")) // We need to save email on login!
+        // Load current user data
+        val name = sharedPref.getString("USER_NAME", "User")
+        val email = sharedPref.getString("USER_EMAIL", "user@example.com")
+        
+        binding.etName.setText(name)
+        binding.etEmail.setText(email)
+        binding.tvProfileName.text = name
+        binding.tvProfileEmail.text = email
 
-        // Note: For simplicity, we are defaulting the switches to true.
-        // In a full app, you would fetch these from the database on screen load.
-        switchEmail.isChecked = true
-        switchPush.isChecked = true
-
-        btnSave.setOnClickListener {
-            val name = etName.text.toString().trim()
-            val email = etEmail.text.toString().trim()
-
-            if (name.isEmpty() || email.isEmpty()) {
-                Toast.makeText(this, "Name and Email cannot be empty", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+        // Dark Mode Logic
+        val isDarkMode = sharedPref.getBoolean("DARK_MODE", false)
+        binding.switchDarkMode.isChecked = isDarkMode
+        
+        binding.switchDarkMode.setOnCheckedChangeListener { _, isChecked ->
+            sharedPref.edit().putBoolean("DARK_MODE", isChecked).apply()
+            if (isChecked) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
-
-            val notifyEmailInt = if (switchEmail.isChecked) 1 else 0
-            val notifyPushInt = if (switchPush.isChecked) 1 else 0
-
-            saveProfile(name, email, notifyEmailInt, notifyPushInt)
         }
 
-        btnLogout.setOnClickListener {
-            // Clear token and user data
+        // Notification Toggles (Mock persistence)
+        binding.switchEmail.isChecked = sharedPref.getBoolean("NOTIFY_EMAIL", true)
+        binding.switchPush.isChecked = sharedPref.getBoolean("NOTIFY_PUSH", true)
+
+        binding.btnSave.setOnClickListener {
+            saveProfile()
+        }
+
+        binding.btnLogout.setOnClickListener {
             sharedPref.edit().clear().apply()
             val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
             finish()
         }
     }
 
-    private fun saveProfile(name: String, email: String, notifyEmail: Int, notifyPush: Int) {
-        progressBar.visibility = View.VISIBLE
-        btnSave.text = ""
+    private fun saveProfile() {
+        val name = binding.etName.text.toString().trim()
+        val email = binding.etEmail.text.toString().trim()
 
-        val sharedPref = getSharedPreferences("BMB_PREFS", MODE_PRIVATE)
+        if (name.isEmpty() || email.isEmpty()) {
+            Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        binding.progressBar.visibility = View.VISIBLE
+        binding.btnSave.isEnabled = false
+
+        val sharedPref = getSharedPreferences("BMB_PREFS", Context.MODE_PRIVATE)
         val token = sharedPref.getString("API_TOKEN", "") ?: ""
 
         lifecycleScope.launch {
             try {
+                val notifyEmail = if (binding.switchEmail.isChecked) 1 else 0
+                val notifyPush = if (binding.switchPush.isChecked) 1 else 0
+                
                 val request = UpdateProfileRequest(name, email, notifyEmail, notifyPush)
                 val response = ApiClient.getApi().updateProfile("Bearer $token", request)
 
-                if (response.isSuccessful && response.body()?.status == "success") {
-                    Toast.makeText(this@SettingsActivity, "Settings Saved!", Toast.LENGTH_SHORT).show()
+                binding.progressBar.visibility = View.GONE
+                binding.btnSave.isEnabled = true
 
-                    // Update local SharedPreferences
+                if (response.isSuccessful) {
                     sharedPref.edit().apply {
                         putString("USER_NAME", name)
                         putString("USER_EMAIL", email)
+                        putBoolean("NOTIFY_EMAIL", binding.switchEmail.isChecked)
+                        putBoolean("NOTIFY_PUSH", binding.switchPush.isChecked)
                         apply()
                     }
+                    binding.tvProfileName.text = name
+                    binding.tvProfileEmail.text = email
+                    Toast.makeText(this@SettingsActivity, "Profile Updated!", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(this@SettingsActivity, "Failed to update profile", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@SettingsActivity, "Update failed", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
+                binding.progressBar.visibility = View.GONE
+                binding.btnSave.isEnabled = true
                 Toast.makeText(this@SettingsActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
-            } finally {
-                progressBar.visibility = View.GONE
-                btnSave.text = "Save Changes"
             }
         }
     }

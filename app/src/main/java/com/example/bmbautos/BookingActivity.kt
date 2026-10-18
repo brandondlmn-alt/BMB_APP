@@ -15,7 +15,8 @@ class BookingActivity : AppCompatActivity() {
     private lateinit var etVehicle: EditText
     private lateinit var etDate: EditText
     private lateinit var etTime: EditText
-    private lateinit var spinnerService: Spinner
+    // CHANGED: Now an AutoCompleteTextView instead of Spinner
+    private lateinit var spinnerService: AutoCompleteTextView
     private lateinit var btnSubmit: Button
     private lateinit var progressBar: ProgressBar
 
@@ -30,14 +31,13 @@ class BookingActivity : AppCompatActivity() {
         btnSubmit = findViewById(R.id.btnSubmit)
         progressBar = findViewById(R.id.progressBar)
 
-        // Setup the dropdown spinner
+        // CHANGED: Setup the modern dropdown menu
         val services = arrayOf(
             "Pre-Sale Evaluation", "Oil & Filter Service",
             "Brake Inspection", "Major Diagnostic", "Suspension Check"
         )
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, services)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerService.adapter = adapter
+        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, services)
+        spinnerService.setAdapter(adapter)
 
         // Show Calendar popup when Date field is clicked
         etDate.setOnClickListener {
@@ -74,9 +74,10 @@ class BookingActivity : AppCompatActivity() {
             val vehicle = etVehicle.text.toString().trim()
             val date = etDate.text.toString().trim()
             val time = etTime.text.toString().trim()
-            val serviceType = spinnerService.selectedItem.toString()
+            // CHANGED: Get text from AutoCompleteTextView
+            val serviceType = spinnerService.text.toString()
 
-            if (vehicle.isEmpty() || date.isEmpty() || time.isEmpty()) {
+            if (vehicle.isEmpty() || date.isEmpty() || time.isEmpty() || serviceType.isEmpty()) {
                 Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }

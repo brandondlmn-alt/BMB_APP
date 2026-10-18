@@ -26,6 +26,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var btnGoogleSSO: Button
     private lateinit var progressBar: ProgressBar
     private lateinit var tvServerSettings: TextView
+    private lateinit var tvCreateAccount: TextView
 
     // Google SSO variables
     private lateinit var googleSignInClient: GoogleSignInClient
@@ -43,6 +44,7 @@ class LoginActivity : AppCompatActivity() {
         btnGoogleSSO = findViewById(R.id.btnGoogleSSO)
         progressBar = findViewById(R.id.progressBar)
         tvServerSettings = findViewById(R.id.tvServerSettings)
+        tvCreateAccount = findViewById(R.id.tvCreateAccount)
 
         updateServerText()
         tvServerSettings.setOnClickListener { showServerDialog() }
@@ -70,6 +72,10 @@ class LoginActivity : AppCompatActivity() {
         btnGoogleSSO.setOnClickListener {
             val signInIntent = googleSignInClient.signInIntent
             startActivityForResult(signInIntent, RC_SIGN_IN)
+        }
+
+        tvCreateAccount.setOnClickListener {
+            startActivity(Intent(this, RegisterActivity::class.java))
         }
     }
 

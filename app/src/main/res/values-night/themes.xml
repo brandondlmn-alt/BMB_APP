@@ -1,7 +1,9 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.BMBAutos" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
-    </style>
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- BMB Autos Web Colors (Dark Mode) -->
+    <color name="bg_slate_50">#0F172A</color> <!-- Dark background -->
+    <color name="brand_blue_600">#3B82F6</color> <!-- Lighter blue for dark mode -->
+    <color name="text_slate_900">#F8FAFC</color> <!-- White text -->
+    <color name="text_slate_500">#94A3B8</color>
+    <color name="success_emerald">#10B981</color>
 </resources>

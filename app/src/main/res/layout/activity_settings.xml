@@ -3,51 +3,110 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8FAFC"
-    android:padding="24dp">
+    android:background="@color/bg_slate_50"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="24dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Settings &amp; Profile"
-            android:textColor="#1E3A8A"
+            android:text="@string/settings_title"
+            android:textColor="@color/brand_blue_600"
             android:textSize="28sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <!-- Profile Section -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Manage your account and app preferences."
-            android:textColor="#64748B" />
+            android:layout_marginTop="24dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@color/white">
 
-        <!-- Name Input -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="24dp">
+
+                <FrameLayout
+                    android:layout_width="100dp"
+                    android:layout_height="100dp">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/ivProfilePicture"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:padding="16dp"
+                        android:background="#EFF6FF"
+                        android:src="@drawable/ic_avatar_placeholder"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+                        app:strokeColor="@color/brand_blue_600"
+                        app:strokeWidth="2dp"
+                        android:importantForAccessibility="no" />
+
+                    <!-- Camera Icon (Optional, remove if not needed) -->
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fabEditProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|end"
+                        android:contentDescription="@string/desc_edit_profile_pic"
+                        app:fabSize="mini"
+                        app:fabCustomSize="32dp"
+                        app:srcCompat="@android:drawable/ic_menu_camera"
+                        app:tint="@color/white"
+                        app:backgroundTint="@color/brand_blue_600" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tvProfileName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/user_name_default"
+                    android:textColor="@color/text_slate_900"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvProfileEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/user_email_default"
+                    android:textColor="@color/text_slate_500" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Form Section -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilName"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:hint="Full Name">
+            android:hint="@string/hint_full_name">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Email Input -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilEmail"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:hint="Email Address">
+            android:hint="@string/hint_email_address">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etEmail"
                 android:layout_width="match_parent"
@@ -55,30 +114,40 @@
                 android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Notification Toggles -->
+        <!-- App Preferences -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Notifications"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/preferences_section_title"
             android:textStyle="bold"
+            android:textColor="@color/text_slate_900"
+            android:textSize="18sp" />
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/switchDarkMode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="12dp"
+            android:text="@string/pref_dark_mode"
             android:textSize="16sp" />
 
         <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/switchEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="Email Notifications"
-            android:textSize="14sp" />
+            android:paddingVertical="12dp"
+            android:text="@string/pref_email_notifications"
+            android:textSize="16sp" />
 
         <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/switchPush"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Push Notifications"
-            android:textSize="14sp" />
+            android:paddingVertical="12dp"
+            android:text="@string/pref_push_notifications"
+            android:textSize="16sp" />
 
         <!-- Save Button -->
         <com.google.android.material.button.MaterialButton
@@ -86,9 +155,9 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginTop="32dp"
-            android:text="Save Changes"
-            android:backgroundTint="#1E3A8A"
-            app:cornerRadius="12dp" />
+            android:text="@string/btn_save_changes"
+            android:backgroundTint="@color/brand_blue_600"
+            app:cornerRadius="16dp" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -98,16 +167,18 @@
             android:layout_gravity="center"
             android:layout_marginTop="-40dp"/>
 
-        <!-- Logout Button -->
+        <!-- Logout Button (Modern Outlined Style) -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnLogout"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_marginTop="24dp"
-            android:text="Logout"
+            android:layout_marginTop="16dp"
+            android:text="@string/btn_logout"
             android:textColor="#DC2626"
-            android:backgroundTint="#FEE2E2"
-            app:cornerRadius="12dp" />
+            app:strokeColor="#DC2626"
+            app:strokeWidth="1dp"
+            app:cornerRadius="16dp" />
 
     </LinearLayout>
 </ScrollView>

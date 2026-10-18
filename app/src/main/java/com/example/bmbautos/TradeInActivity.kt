@@ -13,7 +13,8 @@ class TradeInActivity : AppCompatActivity() {
     private lateinit var etModel: EditText
     private lateinit var etYear: EditText
     private lateinit var etPrice: EditText
-    private lateinit var spinnerType: Spinner
+    // CHANGED: Now an AutoCompleteTextView instead of Spinner
+    private lateinit var spinnerType: AutoCompleteTextView
     private lateinit var btnSubmit: Button
     private lateinit var progressBar: ProgressBar
 
@@ -29,20 +30,20 @@ class TradeInActivity : AppCompatActivity() {
         btnSubmit = findViewById(R.id.btnSubmit)
         progressBar = findViewById(R.id.progressBar)
 
-        // Setup the dropdown spinner
+        // CHANGED: Setup the modern dropdown menu
         val types = arrayOf("Sedan", "Hatchback", "SUV", "Bakkie", "Coupe")
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, types)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerType.adapter = adapter
+        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, types)
+        spinnerType.setAdapter(adapter)
 
         btnSubmit.setOnClickListener {
             val make = etMake.text.toString().trim()
             val model = etModel.text.toString().trim()
             val yearStr = etYear.text.toString().trim()
             val price = etPrice.text.toString().trim()
-            val type = spinnerType.selectedItem.toString()
+            // CHANGED: Get text from AutoCompleteTextView
+            val type = spinnerType.text.toString()
 
-            if (make.isEmpty() || model.isEmpty() || yearStr.isEmpty() || price.isEmpty()) {
+            if (make.isEmpty() || model.isEmpty() || yearStr.isEmpty() || price.isEmpty() || type.isEmpty()) {
                 Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }

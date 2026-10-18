@@ -1,3 +1,29 @@
 <resources>
     <string name="app_name">BMB Autos</string>
+    <string name="settings_title">Settings &amp; Profile</string>
+    <string name="user_name_default">User Name</string>
+    <string name="user_email_default">user@example.com</string>
+    <string name="hint_full_name">Full Name</string>
+    <string name="hint_email_address">Email Address</string>
+    <string name="hint_password">Password</string>
+    <string name="preferences_section_title">App Preferences</string>
+    <string name="pref_dark_mode">Dark Mode</string>
+    <string name="pref_email_notifications">Email Notifications</string>
+    <string name="pref_push_notifications">Push Notifications</string>
+    <string name="btn_save_changes">Save Changes</string>
+    <string name="btn_logout">Logout</string>
+    <string name="desc_edit_profile_pic">Edit profile picture</string>
+
+    <!-- Login Screen -->
+    <string name="login_subtitle">Sign in to your account</string>
+    <string name="btn_sign_in">Sign In</string>
+    <string name="btn_sign_in_google">Sign in with Google</string>
+    <string name="msg_no_account">Don\'t have an account? Create one</string>
+    <string name="server_status_format">Current Server:\n%1$s\n(Tap to change)</string>
+    <string name="loading">Loading...</string>
+
+    <!-- Register Screen -->
+    <string name="register_subtitle">Create an account</string>
+    <string name="btn_sign_up">Sign Up</string>
+    <string name="msg_already_have_account">Already have an account? Sign In</string>
 </resources>

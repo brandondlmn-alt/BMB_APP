@@ -6,8 +6,9 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 
-// --- Login Models ---
+// --- Auth Models ---
 data class LoginRequest(val email: String, val password: String)
+data class RegisterRequest(val name: String, val email: String, val password: String)
 data class User(val id: Int, val name: String, val email: String, val role: String)
 data class LoginResponse(val status: String, val message: String, val token: String?, val user: User?)
 
@@ -29,7 +30,7 @@ data class TradeInRequest(
     val type: String
 )
 
-//Settings & Profile
+// Settings & Profile
 data class UpdateProfileRequest(
     val name: String,
     val email: String,
@@ -37,45 +38,41 @@ data class UpdateProfileRequest(
     val notify_push: Int
 )
 
-// --- Generic Response (used for Bookings and Trade-Ins) ---
+// --- Generic Response ---
 data class GenericResponse(val status: String, val message: String)
 
 // --- API Interface ---
 interface ApiService {
 
-    // 1. Standard Login
     @POST("login.php")
     suspend fun login(@Body request: LoginRequest): Response<LoginResponse>
 
-    // 2. Google SSO Login
+    @POST("register.php")
+    suspend fun register(@Body request: RegisterRequest): Response<LoginResponse>
+
     @POST("sso_login.php")
     suspend fun ssoLogin(@Body request: Map<String, String>): Response<LoginResponse>
 
-    // 3. Fetch Showroom Cars
     @GET("cars.php")
     suspend fun getCars(): Response<CarsResponse>
 
-    // 4. Create a Booking
     @POST("bookings.php")
     suspend fun createBooking(
         @Header("Authorization") token: String,
         @Body request: BookingRequest
     ): Response<GenericResponse>
 
-    // 5. Fetch User's Bookings
     @GET("bookings.php")
     suspend fun getMyBookings(
         @Header("Authorization") token: String
     ): Response<BookingsResponse>
 
-    // 6. Create a Trade-In Request
     @POST("trade_in.php")
     suspend fun createTradeIn(
         @Header("Authorization") token: String,
         @Body request: TradeInRequest
     ): Response<GenericResponse>
 
-    //Settings & Profile
     @POST("update_profile.php")
     suspend fun updateProfile(
         @Header("Authorization") token: String,

@@ -2,8 +2,13 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.BMBAutos" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/brand_blue_600</item>
+        <item name="android:windowBackground">@color/bg_slate_50</item>
     </style>
 
     <style name="Theme.BMBAutos" parent="Base.Theme.BMBAutos" />
+
+    <style name="ShapeAppearanceOverlay.App.CornerSize50Percent" parent="">
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>
