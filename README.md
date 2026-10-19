@@ -44,9 +44,11 @@ The purpose of this app is to digitize the customer experience, allowing users t
 
 ---
 
-## 💻 How to Run and Use the App (Local Setup via Ngrok)
+## 💻 How to Run and Use the App (Temporary Ngrok Setup)
 
-*Note: During development, cloud hosting platforms (Azure, ProFreeHost) experienced regional policy restrictions and DNS propagation delays. To ensure a fully functional demonstration, the app is currently configured to connect to a local WAMP server via an Ngrok secure tunnel. These cloud hosting issues will be resolved for the final Task 3 submission.*
+> ⚠️ **CRITICAL NOTE FOR THE LECTURER:** 
+> The current setup uses **Ngrok as a temporary workaround**. Permanent cloud hosting platforms (such as Azure SQL) are currently experiencing regional quota restrictions for student accounts, and free hosts (like ProFreeHost) are facing severe DNS delays. 
+> The backend will be migrated to a permanent, efficient hosting platform for the final Task 3 submission. Until then, please follow the steps below to run the app using the local WAMP server tunneled via Ngrok.
 
 ### Prerequisites:
 1. **WAMP Server** (or XAMPP) installed on your PC.
@@ -60,25 +62,30 @@ The purpose of this app is to digitize the customer experience, allowing users t
    ```bash
    ngrok http 80
    ```
-3. **⚠️ UPDATE THE URL IN THE CODE (Crucial Step):**
-   If you generated a new Ngrok link, you must update it in the Android Studio code before running:
-   
-   Open the file: `app/src/main/java/com/example/bmbautos/LoginActivity.kt`
-   
-   Scroll down to the bottom to the `showServerDialog()` function.
-   
-   Find this exact line:
-   ```kotlin
-   1 -> "https://YOUR-NGROK-URL-HERE.ngrok-free.app/BMB_AUTOS/api/"
-   ```
-   Replace `https://YOUR-NGROK-URL-HERE.ngrok-free.app` with your new Ngrok Forwarding URL.
-   
-   **Important:** Ensure the URL keeps the `/BMB_AUTOS/api/` at the very end.
+   Copy the generated Forwarding URL (e.g., https://a1b2-c3d4.ngrok-free.app).
 
-4. **Click Build -> Clean Project and Build -> Rebuild Project** in Android Studio.
+   (Note: Ngrok free-tier URLs change every time it restarts. If the link below is dead, you must generate a new one).
 
-5. **Launch the App:** Run the app on a physical device or emulator.
+⚠️ UPDATE THE URL IN THE CODE (Crucial Step):
+If you generated a new Ngrok link, you must update it in the Android Studio code before running:
 
-6. **Select the Server:** On the Login screen, tap the text at the very bottom that says "Current Server". Select "Ngrok Tunnel (Physical Phone)" from the popup dialog.
+Open the file: `app/src/main/java/com/example/bmbautos/LoginActivity.kt`
 
-7. **Log In:** Use the demo credentials (`thabo@bmbautos.co.za` / `welcome123`) or register a new account.
+Scroll down to the bottom to the `showServerDialog()` function.
+
+Find this exact line:
+
+```kotlin
+1 -> "https://YOUR-NGROK-URL-HERE.ngrok-free.app/BMB_AUTOS/api/"
+```
+Replace `https://YOUR-NGROK-URL-HERE.ngrok-free.app` with your new Ngrok Forwarding URL.
+
+Important: Ensure the URL keeps the `/BMB_AUTOS/api/` at the very end.
+
+3. **Click Build -> Clean Project and Build -> Rebuild Project** in Android Studio.
+
+4. **Launch the App:** Run the app on a physical device or emulator.
+
+5. **Select the Server:** On the Login screen, tap the text at the very bottom that says "Current Server". Select "Ngrok Tunnel (Physical Phone)" from the popup dialog.
+
+6. **Log In:** Use the demo credentials (`thabo@bmbautos.co.za` / `welcome123`) or register a new account.
