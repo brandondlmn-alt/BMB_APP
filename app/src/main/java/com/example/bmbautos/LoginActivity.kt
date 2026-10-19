@@ -178,7 +178,7 @@ class LoginActivity : AppCompatActivity() {
         tvServerSettings.text = "Current Server:\n${ApiClient.currentBaseUrl}\n(Tap to change)"
     }
 
-    // --- UPDATED SERVER DIALOG FOR NGROK ---
+    // --- SERVER DIALOG FOR NGROK ---
     private fun showServerDialog() {
         val servers = arrayOf(
             "VM Emulator (10.0.2.2)",
@@ -191,7 +191,8 @@ class LoginActivity : AppCompatActivity() {
             .setItems(servers) { _, which ->
                 val newUrl = when (which) {
                     0 -> "http://10.0.2.2/BMB_AUTOS/api/"
-                    1 -> "https://abstain-sixfold-nervy.ngrok-free.dev/BMB_AUTOS/api/"
+                    // UPDATED NGROK URL HERE
+                    1 -> "https://subtotal-stroller-sandstone.ngrok-free.dev/BMB_AUTOS/api/"
                     2 -> "http://192.168.0.188/BMB_AUTOS/api/"
                     else -> "http://10.0.2.2/BMB_AUTOS/api/"
                 }

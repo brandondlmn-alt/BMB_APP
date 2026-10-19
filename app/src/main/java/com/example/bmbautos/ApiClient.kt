@@ -1,4 +1,5 @@
 package com.example.bmbautos
+
 import android.content.Context
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -36,8 +37,17 @@ object ApiClient {
             level = HttpLoggingInterceptor.Level.BODY
         }
 
+        // THIS IS THE MAGIC FIX FOR NGROK FREE TIER
+        val ngrokInterceptor = okhttp3.Interceptor { chain ->
+            val request = chain.request().newBuilder()
+                .addHeader("ngrok-skip-browser-warning", "true")
+                .build()
+            chain.proceed(request)
+        }
+
         val client = OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
+            .addInterceptor(ngrokInterceptor) // Added here
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .build()
