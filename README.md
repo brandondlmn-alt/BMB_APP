@@ -22,15 +22,15 @@ The purpose of this app is to digitize the customer experience, allowing users t
 
 | Login | Home Screen | Showroom |
 | :---: | :---: | :---: |
-| ![Login](images/Login.jpg) | ![Home Screen](images/home_screen.jpg) | ![Showroom](images/showroom.jpg) |
+| ![Login](images/Login.jpeg) | ![Home Screen](images/home_screen.jpeg) | ![Showroom](images/showroom.jpeg) |
 
 | Dark Mode | Sign Up | Settings & Profile |
 | :---: | :---: | :---: |
-| ![Dark Mode](images/dark_mode.jpg) | ![Sign Up](images/sign_up.jpg) | ![Settings](images/settings_&_profiles.jpg) |
+| ![Dark Mode](images/dark_mode.jpeg) | ![Sign Up](images/sign_up.jpeg) | ![Settings](images/settings_&_profiles.jpeg) |
 
 | Sell Your Car (Trade-In) | My Bookings | My Purchases |
 | :---: | :---: | :---: |
-| ![Sell](images/sell.jpg) | ![My Bookings](images/my_bookings.jpg) | ![My Purchases](images/my_purchases.jpg) |
+| ![Sell](images/sell.jpeg) | ![My Bookings](images/my_bookings.jpeg) | ![My Purchases](images/my_purchases.jpeg) |
 
 ---
 
