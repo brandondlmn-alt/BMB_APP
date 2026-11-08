@@ -7,7 +7,6 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -25,7 +24,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var btnLogin: Button
     private lateinit var btnGoogleSSO: Button
     private lateinit var progressBar: ProgressBar
-    private lateinit var tvServerSettings: TextView
     private lateinit var tvCreateAccount: TextView
 
     // Google SSO variables
@@ -43,11 +41,7 @@ class LoginActivity : AppCompatActivity() {
         btnLogin = findViewById(R.id.btnLogin)
         btnGoogleSSO = findViewById(R.id.btnGoogleSSO)
         progressBar = findViewById(R.id.progressBar)
-        tvServerSettings = findViewById(R.id.tvServerSettings)
         tvCreateAccount = findViewById(R.id.tvCreateAccount)
-
-        updateServerText()
-        tvServerSettings.setOnClickListener { showServerDialog() }
 
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
@@ -172,30 +166,5 @@ class LoginActivity : AppCompatActivity() {
         }
         startActivity(Intent(this@LoginActivity, MainActivity::class.java))
         finish()
-    }
-
-    private fun updateServerText() {
-        tvServerSettings.text = "Current Server:\n${ApiClient.currentBaseUrl}\n(Tap to change)"
-    }
-
-    private fun showServerDialog() {
-        val servers = arrayOf(
-            "AWS Cloud Server (Recommended)",
-            "Local Emulator (10.0.2.2)"
-        )
-
-        AlertDialog.Builder(this)
-            .setTitle("Select API Server")
-            .setItems(servers) { _, which ->
-                val newUrl = when (which) {
-                    0 -> "http://ec2-16-171-44-236.eu-north-1.compute.amazonaws.com/api/"
-                    1 -> "http://10.0.2.2/BMB_AUTOS/api/"
-                    else -> "http://ec2-16-171-44-236.eu-north-1.compute.amazonaws.com/api/"
-                }
-
-                ApiClient.changeUrl(this, newUrl)
-                updateServerText()
-                Toast.makeText(this, "Server switched!", Toast.LENGTH_SHORT).show()
-            }.show()
     }
 }
