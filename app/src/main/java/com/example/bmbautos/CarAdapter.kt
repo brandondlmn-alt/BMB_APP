@@ -19,6 +19,8 @@ class CarAdapter(
         val tvStockNumber: TextView = itemView.findViewById(R.id.tvStockNumber)
         val tvCarName: TextView = itemView.findViewById(R.id.tvCarName)
         val tvCarPrice: TextView = itemView.findViewById(R.id.tvCarPrice)
+        val tvCarColor: TextView = itemView.findViewById(R.id.tvCarColor)
+        val tvCarStock: TextView = itemView.findViewById(R.id.tvCarStock)
         val tvCarMileage: TextView = itemView.findViewById(R.id.tvCarMileage)
         val tvCarStatus: TextView = itemView.findViewById(R.id.tvCarStatus)
         val btnBuy: Button = itemView.findViewById(R.id.btnBuy)
@@ -35,7 +37,9 @@ class CarAdapter(
         holder.tvStockNumber.text = car.stock_number
         holder.tvCarName.text = "${car.year} ${car.make} ${car.model}"
         holder.tvCarPrice.text = car.price
-        holder.tvCarMileage.text = String.format("Mileage: %s", car.mileage)
+        holder.tvCarColor.text = "🎨 Color: ${car.color}"
+        holder.tvCarStock.text = "📦 Stock: ${car.stock_quantity}"
+        holder.tvCarMileage.text = "📍 Mileage: ${car.mileage}"
         holder.tvCarStatus.text = car.status
 
         Glide.with(holder.itemView.context)
@@ -43,6 +47,7 @@ class CarAdapter(
             .placeholder(android.R.drawable.ic_menu_gallery)
             .into(holder.imgCar)
 
+        holder.btnBuy.text = "Buy Now"
         holder.btnBuy.setOnClickListener {
             onBuyClick(car)
         }

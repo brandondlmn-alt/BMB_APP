@@ -26,6 +26,7 @@ class BookingsActivity : AppCompatActivity() {
         tvEmpty = findViewById(R.id.tvEmpty)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
+        NavUtils.setupUniversalNavbar(this, R.id.nav_bookings)
         fetchBookings()
     }
 

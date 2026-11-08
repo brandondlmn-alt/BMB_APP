@@ -100,6 +100,15 @@ class BookingActivity : AppCompatActivity() {
                         val carNames = myCars.map { "${it.year} ${it.make} ${it.model}" }.toTypedArray()
                         val adapter = ArrayAdapter(this@BookingActivity, android.R.layout.simple_dropdown_item_1line, carNames)
                         etVehicle.setAdapter(adapter)
+
+                        intent.getStringExtra("SELECTED_VEHICLE")?.let { selected ->
+                            val baseName = selected.substringBefore(" (")
+                            if (carNames.contains(baseName)) {
+                                etVehicle.setText(baseName, false)
+                            } else if (carNames.isNotEmpty()) {
+                                etVehicle.setText(carNames[0], false)
+                            }
+                        }
                     }
                 } else {
                     Toast.makeText(this@BookingActivity, "Failed to load your vehicles", Toast.LENGTH_SHORT).show()
@@ -125,6 +134,11 @@ class BookingActivity : AppCompatActivity() {
                 val response = ApiClient.getApi().createBooking("Bearer $token", request)
 
                 if (response.isSuccessful && response.body()?.status == "success") {
+                    NotificationHelper.showNotification(
+                        this@BookingActivity,
+                        "Booking Confirmed!",
+                        "Your service has been scheduled."
+                    )
                     NotificationHelper.showSuccessDialog(
                         this@BookingActivity,
                         "Booking Confirmed!",
@@ -132,7 +146,6 @@ class BookingActivity : AppCompatActivity() {
                     ) {
                         finish()
                     }
-                    NotificationHelper.showSystemNotification(this@BookingActivity, "Service Booked", "Your appointment for $date is confirmed.")
                 } else {
                     Toast.makeText(this@BookingActivity, "Failed: ${response.body()?.message}", Toast.LENGTH_SHORT).show()
                 }

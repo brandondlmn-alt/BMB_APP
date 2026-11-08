@@ -36,5 +36,6 @@
         <activity android:name=".SettingsActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".PurchasesActivity" />
+        <activity android:name=".MyGarageActivity" />
     </application>
 </manifest>

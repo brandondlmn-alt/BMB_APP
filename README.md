@@ -1,91 +1,103 @@
-# 🚗 BMB Autos - Android Mobile Application
+# 🚗 BMB Autos — Full-Stack Automotive Dealership Platform
 
-## 📖 Project Overview
-BMB Autos is a comprehensive automotive dealership platform. This repository contains the native **Android Mobile Application** built in Kotlin, which serves as the mobile extension of a PHP/MySQL web platform. 
-
-The purpose of this app is to digitize the customer experience, allowing users to browse inventory, securely purchase vehicles, book workshop services, and manage their profiles on the go.
-
-## ✨ Key Features
-*   **Secure Authentication:** Standard Email/Password login and Registration.
-*   **Google SSO:** Seamless Single Sign-On integrated via Firebase.
-*   **Modern UI/UX:** Built with Material 3 components, custom vector icons, and a Tailwind-inspired color palette.
-*   **Dark Mode:** Fully persistent night mode toggle.
-*   **Vehicle Showroom:** Browse available cars with real-time search and unique stock numbers.
-*   **Purchasing System:** Buy vehicles directly through the app, which updates the database and logs the transaction.
-*   **Smart Service Booking:** A system that verifies if the user owns a vehicle before allowing them to book a service.
-*   **Trade-In Evaluations:** Submit vehicles for grading, automatically generating a workshop booking.
-*   **Push Notifications:** Local system notifications for successful actions.
+[![Android CI](https://github.com/thabo-bmb/bmb-autos-android/actions/workflows/android.yml/badge.svg)](https://github.com/thabo-bmb/bmb-autos-android/actions)
+[![AWS EC2 Deployed](https://img.shields.io/badge/AWS%20EC2-Live%20Backend-orange?logo=amazon-aws)](http://ec2-16-171-44-236.eu-north-1.compute.amazonaws.com/)
+[![Kotlin](https://img.shields.io/badge/Kotlin-1.9+-purple?logo=kotlin)](https://kotlinlang.org/)
+[![PHP](https://img.shields.io/badge/PHP-8.2-blue?logo=php)](https://www.php.net/)
 
 ---
 
-## 📸 App Screenshots
+## 📖 1. Project Overview & Purpose
+**BMB Autos** is a comprehensive, production-ready digital automotive dealership platform developed as a final year Work Integrated Learning (WIL) capstone project. 
 
-| Login | Home Screen | Showroom |
-| :---: | :---: | :---: |
-| ![Login](images/Login.jpeg) | ![Home Screen](images/home_screen.jpeg) | ![Showroom](images/showroom.jpeg) |
-
-| Dark Mode | Sign Up | Settings & Profile |
-| :---: | :---: | :---: |
-| ![Dark Mode](images/dark_mode.jpeg) | ![Sign Up](images/sign_up.jpeg) | ![Settings](images/settings_&_profiles.jpeg) |
-
-| Sell Your Car (Trade-In) | My Bookings | My Purchases |
-| :---: | :---: | :---: |
-| ![Sell](images/sell.jpeg) | ![My Bookings](images/my_bookings.jpeg) | ![My Purchases](images/my_purchases.jpeg) |
+The platform bridges the gap between modern customer mobility and dealership operations through a robust full-stack architecture:
+*   **Web Platform (Website & Admin Panel):** Empowers dealership administrators to manage vehicle inventory, stock quantities, pricing, and view customer orders in real-time.
+*   **Native Android Application (Kotlin):** Delivers a seamless mobile experience for customers to browse vehicle showrooms, purchase cars securely, book certified workshop services, view transaction receipts, and manage their personal vehicle garage ("My Garage").
 
 ---
 
-## 🛠️ Tech Stack
-*   **Language:** Kotlin
-*   **Networking:** Retrofit & OkHttp
-*   **Image Loading:** Glide
-*   **Authentication:** Firebase Auth (Google SSO) + Custom PHP Token Auth
-*   **Backend:** PHP / MySQL (REST API)
-*   **CI/CD:** GitHub Actions
+## 🛠️ 2. Tech Stack
+
+| Tier | Technologies Used |
+| :--- | :--- |
+| **Mobile App (Android)** | Kotlin, Material Design 3, Retrofit 2, OkHttp, Glide, Firebase Auth (Google SSO), Coroutines |
+| **Web Backend & API** | PHP 8.2, MySQL, RESTful API Architecture, Apache HTTP Server |
+| **Cloud Infrastructure** | AWS EC2 (Elastic Compute Cloud), Linux Ubuntu Server |
+| **DevOps & CI/CD** | GitHub Actions (Automated builds, linting, and unit testing) |
 
 ---
 
-## 💻 How to Run and Use the App (Temporary Ngrok Setup)
+## 📱 3. Key Features (Android App)
+*   🔑 **Secure Authentication & Google SSO:** Email/password login/registration with Firebase Google Single Sign-On integration.
+*   🔄 **Persistent Login (Auto-Login):** Automatically verifies stored `API_TOKEN` in `SharedPreferences` on app launch via `SplashActivity`, routing returning users straight to the dashboard.
+*   🚗 **"My Garage":** Dedicated hub where users can view vehicles they have successfully purchased and book maintenance directly for their owned cars.
+*   💳 **Seamless Purchasing Flow:** Instant car purchasing with automated stock decrement on the AWS backend and instant transaction record creation.
+*   🧾 **Digital Receipt Generation:** Generates printable transaction receipts hosted on AWS (`/receipt.php?transaction_id=ID`), accessible directly via browser intents.
+*   🔔 **System Push Notifications:** High-priority local system tray notifications for successful booking appointments and vehicle purchases.
+*   🎨 **Modern UI & Dark Mode:** Built with Material 3 components, bubbly icon badges, and fully persistent night mode toggles.
+*   🔍 **Advanced Search:** Real-time filtering across vehicle make, model, and color.
 
-> ⚠️ **CRITICAL NOTE FOR THE LECTURER:** 
-> The current setup uses **Ngrok as a temporary workaround**. Permanent cloud hosting platforms (such as Azure SQL) are currently experiencing regional quota restrictions for student accounts, and free hosts (like ProFreeHost) are facing severe DNS delays. 
-> The backend will be migrated to a permanent, efficient hosting platform for the final Task 3 submission. Until then, please follow the steps below to run the app using the local WAMP server tunneled via Ngrok.
+---
 
-### Prerequisites:
-1. **WAMP Server** (or XAMPP) installed on your PC.
-2. **Ngrok** installed and authenticated on your PC.
-3. The `BMB_AUTOS` PHP backend and MySQL database running on WAMP.
+## 🌐 4. Key Features (Website & Admin Platform)
+*   🚘 **Extensive Showroom Inventory:** 50+ unique vehicles featuring detailed specs, color variants, stock quantities, and high-res imagery.
+*   📱 **Responsive Web Design:** Fully optimized across mobile, tablet, and desktop viewports.
+*   🔎 **Advanced Filtering:** Instant filtering by price range, year, make, and body type.
+*   🛡️ **Admin Dashboard:** Secure backend portal for inventory management, stock level tracking, and customer booking administration.
 
-### Step-by-Step Setup:
+---
 
-1. **Start your local server:** Ensure WAMP is running and the icon is green (Put Online).
-2. **Start the Ngrok Tunnel:** Open a terminal (Command Prompt) where Ngrok is installed and run:
+## ☁️ 5. Live Deployment Details
+The backend REST API and MySQL database are fully deployed and hosted live on an **AWS EC2 instance**. No local WAMP/XAMPP server or Ngrok tunneling is required.
+
+*   **Live API Base URL:** `http://ec2-16-171-44-236.eu-north-1.compute.amazonaws.com/api/`
+*   **Live Web Platform:** `http://ec2-16-171-44-236.eu-north-1.compute.amazonaws.com/`
+
+---
+
+## ⚙️ 6. Setup & Installation
+
+### Android App Repository:
+1. Clone the Android repository:
    ```bash
-   ngrok http 80
+   git clone https://github.com/thabo-bmb/bmb-autos-android.git
    ```
-   Copy the generated Forwarding URL (e.g., https://a1b2-c3d4.ngrok-free.app).
+2. Open the project in **Android Studio**.
+3. Sync Gradle and run the app on an Android emulator or physical device (API 24+). *Note: The app automatically connects to the live AWS backend endpoint.*
 
-   (Note: Ngrok free-tier URLs change every time it restarts. If the link below is dead, you must generate a new one).
+### Web & API Repository:
+1. Clone the Web API repository:
+   ```bash
+   git clone https://github.com/thabo-bmb/bmb-autos-backend.git
+   ```
+2. Deploy the PHP files to any Apache/PHP server or review the source code structure.
 
-⚠️ UPDATE THE URL IN THE CODE (Crucial Step):
-If you generated a new Ngrok link, you must update it in the Android Studio code before running:
+---
 
-Open the file: `app/src/main/java/com/example/bmbautos/LoginActivity.kt`
+## 🔄 7. CI/CD Pipeline
+The project utilizes **GitHub Actions** for continuous integration. Every push and pull request triggers an automated workflow (`android.yml`) that:
+*   Sets up the JDK environment.
+*   Caches Gradle dependencies.
+*   Executes unit tests (`app:testDebugUnitTest`).
+*   Builds the debug APK (`app:assembleDebug`) to guarantee code health and compilation success.
 
-Scroll down to the bottom to the `showServerDialog()` function.
+---
 
-Find this exact line:
+## 🚀 8. Release Notes (v2.0.0)
 
-```kotlin
-1 -> "https://YOUR-NGROK-URL-HERE.ngrok-free.app/BMB_AUTOS/api/"
-```
-Replace `https://YOUR-NGROK-URL-HERE.ngrok-free.app` with your new Ngrok Forwarding URL.
+| Version | Release Date | Key Upgrades & Changes |
+| :---: | :---: | :--- |
+| **v1.0.0** | *Prototype* | Basic local WAMP setup, static XML views, manual server switching via Ngrok. |
+| **v2.0.0** | *Current Release* | • Migrated backend & MySQL database to **AWS EC2**.<br>• Added **Persistent Login** via `SplashActivity`.<br>• Implemented **"My Garage"** and **Digital Receipts**.<br>• Upgraded UI to Material 3 with bubbly icons & dark mode.<br>• Automated inventory stock decrement on purchase. |
 
-Important: Ensure the URL keeps the `/BMB_AUTOS/api/` at the very end.
+---
 
-3. **Click Build -> Clean Project and Build -> Rebuild Project** in Android Studio.
+## 🎥 9. Demonstration Video
+[![Watch the Demo Video](https://img.shields.io/badge/YouTube-Watch%20Demo-red?logo=youtube&logoColor=white)](https://youtube.com/placeholder-link-bmb-autos)
+*(Click the badge above to watch the full walkthrough demonstration video).*
 
-4. **Launch the App:** Run the app on a physical device or emulator.
+---
 
-5. **Select the Server:** On the Login screen, tap the text at the very bottom that says "Current Server". Select "Ngrok Tunnel (Physical Phone)" from the popup dialog.
-
-6. **Log In:** Use the demo credentials (`thabo@bmbautos.co.za` / `welcome123`) or register a new account.
+## 🔗 10. Repositories
+*   📱 **Android App Repository:** [GitHub - bmb-autos-android](https://github.com/thabo-bmb/bmb-autos-android)
+*   💻 **Website & API Repository:** [GitHub - bmb-autos-backend](https://github.com/thabo-bmb/bmb-autos-backend)

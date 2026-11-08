@@ -16,6 +16,8 @@ class PurchasesAdapter(private val purchaseList: List<Purchase>) : RecyclerView.
         val tvStockNumber: TextView = itemView.findViewById(R.id.tvStockNumber)
         val tvCarName: TextView = itemView.findViewById(R.id.tvCarName)
         val tvCarPrice: TextView = itemView.findViewById(R.id.tvCarPrice)
+        val tvCarColor: TextView = itemView.findViewById(R.id.tvCarColor)
+        val tvCarStock: TextView = itemView.findViewById(R.id.tvCarStock)
         val tvCarMileage: TextView = itemView.findViewById(R.id.tvCarMileage)
         val tvCarStatus: TextView = itemView.findViewById(R.id.tvCarStatus)
         val btnBuy: Button = itemView.findViewById(R.id.btnBuy)
@@ -32,6 +34,8 @@ class PurchasesAdapter(private val purchaseList: List<Purchase>) : RecyclerView.
         holder.tvStockNumber.text = purchase.stock_number
         holder.tvCarName.text = "${purchase.year} ${purchase.make} ${purchase.model}"
         holder.tvCarPrice.text = String.format("Paid: %s", purchase.amount)
+        holder.tvCarColor.text = "Color: ${purchase.color}"
+        holder.tvCarStock.text = "Qty: ${purchase.stock_quantity}"
         holder.tvCarMileage.text = String.format("Date: %s", purchase.created_at.substring(0, 10))
         holder.tvCarStatus.text = "Purchased"
         holder.tvCarStatus.setTextColor(android.graphics.Color.parseColor("#059669"))

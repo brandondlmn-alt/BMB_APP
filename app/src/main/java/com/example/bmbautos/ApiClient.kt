@@ -11,8 +11,8 @@ object ApiClient {
     private const val PREFS_NAME = "BMB_PREFS"
     private const val KEY_BASE_URL = "BASE_URL"
 
-    // Default to Emulator URL
-    private const val DEFAULT_URL = "http://10.0.2.2/BMB_AUTOS/api/"
+
+    private const val DEFAULT_URL = "http://ec2-16-171-44-236.eu-north-1.compute.amazonaws.com/api/"
 
     var currentBaseUrl: String = DEFAULT_URL
         private set

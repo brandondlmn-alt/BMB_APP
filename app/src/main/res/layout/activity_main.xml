@@ -8,6 +8,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="?attr/actionBarSize"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -19,21 +20,22 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="0dp"
+                android:layout_margin="16dp"
+                app:cardCornerRadius="24dp"
                 app:cardBackgroundColor="@color/text_slate_900"
-                app:cardElevation="0dp">
+                app:cardElevation="6dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="24dp">
+                    android:padding="28dp">
 
                     <TextView
                         android:id="@+id/tvWelcome"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Welcome back, User"
+                        android:text="Welcome back,\nUser"
                         android:textColor="@color/white"
                         android:textSize="28sp"
                         android:textStyle="bold" />
@@ -41,28 +43,40 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="We're glad to have you with us."
+                        android:layout_marginTop="8dp"
+                        android:text="Certified Dealer Partner • Online Showroom"
                         android:textColor="#94A3B8"
                         android:textSize="14sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Section Title -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:text="Quick Actions"
+                android:textColor="@color/text_slate_900"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
             <!-- Quick Actions Grid -->
             <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
                 android:columnCount="2"
-                android:padding="16dp">
+                android:paddingHorizontal="16dp"
+                android:paddingBottom="24dp">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardBrowse"
                     android:layout_width="0dp"
-                    android:layout_height="130dp"
+                    android:layout_height="140dp"
                     android:layout_columnWeight="1"
                     android:layout_margin="8dp"
-                    app:cardCornerRadius="20dp"
+                    app:cardCornerRadius="24dp"
                     app:cardElevation="4dp"
                     app:cardBackgroundColor="@color/white">
                     <LinearLayout
@@ -71,15 +85,17 @@
                         android:gravity="center"
                         android:orientation="vertical">
                         <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@drawable/bg_icon_circle"
-                            android:padding="12dp"
-                            android:src="@drawable/ic_car" />
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:background="@drawable/bg_bubble_blue"
+                            android:contentDescription="Browse Cars"
+                            android:padding="16dp"
+                            android:src="@drawable/ic_car"
+                            app:tint="@color/brand_blue_600" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="10dp"
                             android:text="Browse Cars"
                             android:textStyle="bold"
                             android:textColor="@color/text_slate_900" />
@@ -89,10 +105,10 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardService"
                     android:layout_width="0dp"
-                    android:layout_height="130dp"
+                    android:layout_height="140dp"
                     android:layout_columnWeight="1"
                     android:layout_margin="8dp"
-                    app:cardCornerRadius="20dp"
+                    app:cardCornerRadius="24dp"
                     app:cardElevation="4dp"
                     app:cardBackgroundColor="@color/white">
                     <LinearLayout
@@ -101,15 +117,17 @@
                         android:gravity="center"
                         android:orientation="vertical">
                         <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@drawable/bg_icon_circle"
-                            android:padding="12dp"
-                            android:src="@drawable/ic_wrench" />
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:background="@drawable/bg_bubble_purple"
+                            android:contentDescription="Book Service"
+                            android:padding="16dp"
+                            android:src="@drawable/ic_wrench"
+                            app:tint="#9333EA" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="10dp"
                             android:text="Book Service"
                             android:textStyle="bold"
                             android:textColor="@color/text_slate_900" />
@@ -119,10 +137,10 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardTradeIn"
                     android:layout_width="0dp"
-                    android:layout_height="130dp"
+                    android:layout_height="140dp"
                     android:layout_columnWeight="1"
                     android:layout_margin="8dp"
-                    app:cardCornerRadius="20dp"
+                    app:cardCornerRadius="24dp"
                     app:cardElevation="4dp"
                     app:cardBackgroundColor="@color/white">
                     <LinearLayout
@@ -131,15 +149,17 @@
                         android:gravity="center"
                         android:orientation="vertical">
                         <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@drawable/bg_icon_circle"
-                            android:padding="12dp"
-                            android:src="@drawable/ic_handshake" />
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:background="@drawable/bg_bubble_amber"
+                            android:contentDescription="My Trade-Ins"
+                            android:padding="16dp"
+                            android:src="@drawable/ic_handshake"
+                            app:tint="#D97706" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="10dp"
                             android:text="My Trade-Ins"
                             android:textStyle="bold"
                             android:textColor="@color/text_slate_900" />
@@ -149,10 +169,10 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardPurchases"
                     android:layout_width="0dp"
-                    android:layout_height="130dp"
+                    android:layout_height="140dp"
                     android:layout_columnWeight="1"
                     android:layout_margin="8dp"
-                    app:cardCornerRadius="20dp"
+                    app:cardCornerRadius="24dp"
                     app:cardElevation="4dp"
                     app:cardBackgroundColor="@color/white">
                     <LinearLayout
@@ -161,15 +181,17 @@
                         android:gravity="center"
                         android:orientation="vertical">
                         <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@drawable/bg_icon_circle"
-                            android:padding="12dp"
-                            android:src="@drawable/ic_car" /> <!-- You can reuse the car icon -->
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:background="@drawable/bg_bubble_emerald"
+                            android:contentDescription="My Purchases"
+                            android:padding="16dp"
+                            android:src="@drawable/ic_car"
+                            app:tint="#059669" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="10dp"
                             android:text="My Purchases"
                             android:textStyle="bold"
                             android:textColor="@color/text_slate_900" />
@@ -179,10 +201,10 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardHistory"
                     android:layout_width="0dp"
-                    android:layout_height="130dp"
+                    android:layout_height="140dp"
                     android:layout_columnWeight="1"
                     android:layout_margin="8dp"
-                    app:cardCornerRadius="20dp"
+                    app:cardCornerRadius="24dp"
                     app:cardElevation="4dp"
                     app:cardBackgroundColor="@color/white">
                     <LinearLayout
@@ -191,15 +213,17 @@
                         android:gravity="center"
                         android:orientation="vertical">
                         <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@drawable/bg_icon_circle"
-                            android:padding="12dp"
-                            android:src="@drawable/ic_document" />
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:background="@drawable/bg_bubble_pink"
+                            android:contentDescription="View History"
+                            android:padding="16dp"
+                            android:src="@drawable/ic_document"
+                            app:tint="#DB2777" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="10dp"
                             android:text="View History"
                             android:textStyle="bold"
                             android:textColor="@color/text_slate_900" />

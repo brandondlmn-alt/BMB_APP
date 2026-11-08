@@ -9,7 +9,7 @@ import androidx.core.app.NotificationCompat
 
 object NotificationHelper {
 
-    // 1. Show a beautiful success popup
+    // 1. Show a beautiful success popup dialog
     fun showSuccessDialog(context: Context, title: String, message: String, onDismiss: (() -> Unit)? = null) {
         AlertDialog.Builder(context)
             .setTitle(title)
@@ -23,31 +23,35 @@ object NotificationHelper {
             .show()
     }
 
-    // 2. Trigger a System Tray Push Notification
-    fun showSystemNotification(context: Context, title: String, message: String) {
-        val channelId = "bmb_notifications"
+    // 2. Trigger System Tray Push Notification
+    fun showNotification(context: Context, title: String, message: String) {
+        val channelId = "bmb_alerts_channel"
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        // Create the channel for Android 8.0+
+        // Create Notification Channel for Android 8.0+ (API 26+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 channelId,
-                "BMB Autos Notifications",
+                "BMB Autos Alerts",
                 NotificationManager.IMPORTANCE_HIGH
             )
             notificationManager.createNotificationChannel(channel)
         }
 
-        // Build the notification
+        // Build notification
         val notification = NotificationCompat.Builder(context, channelId)
-            .setSmallIcon(R.mipmap.ic_launcher) // Uses your app logo
+            .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle(title)
             .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
             .build()
 
-        // Show it
         notificationManager.notify(System.currentTimeMillis().toInt(), notification)
+    }
+
+    // Alias for backward compatibility
+    fun showSystemNotification(context: Context, title: String, message: String) {
+        showNotification(context, title, message)
     }
 }

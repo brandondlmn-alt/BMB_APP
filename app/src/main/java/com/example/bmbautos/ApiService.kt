@@ -22,7 +22,9 @@ data class Car(
     val price: String,
     val mileage: String,
     val image: String,
-    val status: String
+    val status: String,
+    val color: String,
+    val stock_quantity: Int
 )
 data class CarsResponse(val status: String, val count: Int, val data: List<Car>)
 
@@ -33,6 +35,13 @@ data class BookingsResponse(val status: String, val data: List<Booking>)
 
 // --- Purchase Models ---
 data class PurchaseRequest(val car_id: Int, val amount: String)
+data class PurchaseResponse(
+    val status: String,
+    val message: String,
+    val transaction_id: Int?,
+    val receipt_url: String?,
+    val stock_quantity: Int?
+)
 data class Purchase(
     val transaction_id: Int,
     val amount: String,
@@ -41,7 +50,9 @@ data class Purchase(
     val make: String,
     val model: String,
     val year: Int,
-    val image: String
+    val image: String,
+    val color: String,
+    val stock_quantity: Int
 )
 data class PurchasesResponse(val status: String, val data: List<Purchase>)
 
@@ -60,6 +71,11 @@ data class UpdateProfileRequest(
     val email: String,
     val notify_email: Int,
     val notify_push: Int
+)
+
+data class ChangePasswordRequest(
+    val current_password: String,
+    val new_password: String
 )
 
 // --- Generic Response ---
@@ -103,11 +119,17 @@ interface ApiService {
         @Body request: UpdateProfileRequest
     ): Response<GenericResponse>
 
+    @POST("change_password.php")
+    suspend fun changePassword(
+        @Header("Authorization") token: String,
+        @Body request: ChangePasswordRequest
+    ): Response<GenericResponse>
+
     @POST("purchase_car.php")
     suspend fun purchaseCar(
         @Header("Authorization") token: String,
         @Body request: PurchaseRequest
-    ): Response<GenericResponse>
+    ): Response<PurchaseResponse>
 
     @GET("get_purchases.php")
     suspend fun getMyPurchases(

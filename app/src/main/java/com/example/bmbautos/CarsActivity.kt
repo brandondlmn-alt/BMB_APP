@@ -1,5 +1,7 @@
 package com.example.bmbautos
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -31,6 +33,7 @@ class CarsActivity : AppCompatActivity() {
         etSearch = findViewById(R.id.etSearch)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
+        NavUtils.setupUniversalNavbar(this, R.id.nav_search)
 
         // Initialize adapter with the Buy Click listener
         carAdapter = CarAdapter(emptyList()) { car ->
@@ -52,7 +55,7 @@ class CarsActivity : AppCompatActivity() {
     private fun showBuyConfirmation(car: Car) {
         AlertDialog.Builder(this)
             .setTitle("Purchase Vehicle")
-            .setMessage("Do you want to buy the ${car.make} ${car.model} for ${car.price}?")
+            .setMessage("Do you want to buy the ${car.color} ${car.year} ${car.make} ${car.model} for ${car.price}?")
             .setPositiveButton("Confirm") { _, _ ->
                 executePurchase(car)
             }
@@ -69,17 +72,31 @@ class CarsActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 val response = ApiClient.getApi().purchaseCar("Bearer $token", PurchaseRequest(car.id, car.price))
+                val body = response.body()
 
-                if (response.isSuccessful && response.body()?.status == "success") {
+                if (response.isSuccessful && body != null) {
+                    val transactionId = body.transaction_id ?: 0
+                    val receiptUrl = body.receipt_url ?: "receipt.php?transaction_id=$transactionId"
+                    val fullReceiptUrl = "http://ec2-16-171-44-236.eu-north-1.compute.amazonaws.com/$receiptUrl"
 
                     // SHOW THE NOTIFICATIONS
-                    NotificationHelper.showSuccessDialog(this@CarsActivity, "Purchase Successful!", "You are now the proud owner of a ${car.make} ${car.model}.")
                     NotificationHelper.showSystemNotification(this@CarsActivity, "Purchase Complete", "Congratulations on your new ${car.make} ${car.model}!")
 
-                    fetchCars() // Reload the list to show it is Sold
+                    // Show Success Dialog with View Receipt Button
+                    AlertDialog.Builder(this@CarsActivity)
+                        .setTitle("Purchase Successful!")
+                        .setMessage("You are now the proud owner of a ${car.make} ${car.model}.\nTransaction ID: #$transactionId")
+                        .setPositiveButton("View Receipt") { _, _ ->
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(fullReceiptUrl))
+                            startActivity(intent)
+                        }
+                        .setNegativeButton("Close", null)
+                        .show()
+
+                    fetchCars() // Reload the list to show updated stock quantity & status
                 } else {
                     val errorBody = response.errorBody()?.string()
-                    val errorMsg = if (errorBody.isNullOrEmpty()) "Unknown Error (Code: ${response.code()})" else errorBody
+                    val errorMsg = if (errorBody.isNullOrEmpty()) body?.message ?: "Unknown Error (Code: ${response.code()})" else errorBody
                     Toast.makeText(this@CarsActivity, "Failed: $errorMsg", Toast.LENGTH_LONG).show()
                 }
             } catch (e: Exception) {
@@ -93,7 +110,8 @@ class CarsActivity : AppCompatActivity() {
     private fun filterCars(query: String) {
         val filteredList = allCars.filter {
             it.make.lowercase().contains(query.lowercase()) ||
-                    it.model.lowercase().contains(query.lowercase())
+                    it.model.lowercase().contains(query.lowercase()) ||
+                    it.color.lowercase().contains(query.lowercase())
         }
         carAdapter.updateList(filteredList)
     }

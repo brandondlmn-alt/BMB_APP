@@ -19,10 +19,10 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginBottom="16dp"
-                app:cardCornerRadius="24dp"
-                app:cardElevation="8dp"
+                app:cardCornerRadius="28dp"
+                app:cardElevation="12dp"
                 app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
@@ -30,6 +30,17 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="32dp">
+
+                    <ImageView
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="12dp"
+                        android:background="@drawable/bg_bubble_blue"
+                        android:contentDescription="BMB Autos Logo"
+                        android:padding="16dp"
+                        android:src="@drawable/ic_car"
+                        app:tint="@color/brand_blue_600" />
 
                     <TextView
                         android:id="@+id/tvTitle"
@@ -58,6 +69,10 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:boxCornerRadiusTopStart="16dp"
+                        app:boxCornerRadiusTopEnd="16dp"
+                        app:boxCornerRadiusBottomStart="16dp"
+                        app:boxCornerRadiusBottomEnd="16dp"
                         android:hint="Email Address">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etEmail"
@@ -73,6 +88,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        app:boxCornerRadiusTopStart="16dp"
+                        app:boxCornerRadiusTopEnd="16dp"
+                        app:boxCornerRadiusBottomStart="16dp"
+                        app:boxCornerRadiusBottomEnd="16dp"
                         android:hint="Password"
                         app:passwordToggleEnabled="true">
                         <com.google.android.material.textfield.TextInputEditText
@@ -91,7 +110,7 @@
                         android:backgroundTint="@color/brand_blue_600"
                         android:text="Sign In"
                         android:textSize="16sp"
-                        app:cornerRadius="12dp" />
+                        app:cornerRadius="20dp" />
 
                     <ProgressBar
                         android:id="@+id/progressBar"
@@ -114,7 +133,7 @@
                         android:backgroundTint="@color/white"
                         app:strokeColor="#DADCE0"
                         app:strokeWidth="1dp"
-                        app:cornerRadius="12dp"
+                        app:cornerRadius="20dp"
                         app:icon="@drawable/ic_google_logo"
                         app:iconTint="@null"
                         app:iconGravity="textStart"
