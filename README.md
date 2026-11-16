@@ -1,6 +1,6 @@
 # 🚗 BMB Autos — Full-Stack Automotive Dealership Platform
 
-[![Android CI](https://github.com/thabo-bmb/bmb-autos-android/actions/workflows/android.yml/badge.svg)](https://github.com/thabo-bmb/bmb-autos-android/actions)
+[![Android CI](https://github.com/brandondlmn-alt/BMB_APP/actions/workflows/android.yml/badge.svg)](https://github.com/brandondlmn-alt/BMB_APP/actions)
 [![AWS EC2 Deployed](https://img.shields.io/badge/AWS%20EC2-Live%20Backend-orange?logo=amazon-aws)](http://ec2-16-171-44-236.eu-north-1.compute.amazonaws.com/)
 [![Kotlin](https://img.shields.io/badge/Kotlin-1.9+-purple?logo=kotlin)](https://kotlinlang.org/)
 [![PHP](https://img.shields.io/badge/PHP-8.2-blue?logo=php)](https://www.php.net/)
@@ -60,7 +60,7 @@ The backend REST API and MySQL database are fully deployed and hosted live on an
 ### Android App Repository:
 1. Clone the Android repository:
    ```bash
-   git clone https://github.com/thabo-bmb/bmb-autos-android.git
+   git clone https://github.com/brandondlmn-alt/BMB_APP.git
    ```
 2. Open the project in **Android Studio**.
 3. Sync Gradle and run the app on an Android emulator or physical device (API 24+). *Note: The app automatically connects to the live AWS backend endpoint.*
@@ -68,7 +68,7 @@ The backend REST API and MySQL database are fully deployed and hosted live on an
 ### Web & API Repository:
 1. Clone the Web API repository:
    ```bash
-   git clone https://github.com/thabo-bmb/bmb-autos-backend.git
+   git clone https://github.com/brandondlmn-alt/BMB_AUTOS.git
    ```
 2. Deploy the PHP files to any Apache/PHP server or review the source code structure.
 
@@ -99,5 +99,5 @@ The project utilizes **GitHub Actions** for continuous integration. Every push a
 ---
 
 ## 🔗 10. Repositories
-*   📱 **Android App Repository:** [GitHub - bmb-autos-android](https://github.com/thabo-bmb/bmb-autos-android)
-*   💻 **Website & API Repository:** [GitHub - bmb-autos-backend](https://github.com/thabo-bmb/bmb-autos-backend)
+*   📱 **Android App Repository:** [GitHub - BMB_APP](https://github.com/brandondlmn-alt/BMB_APP)
+*   💻 **Website & API Repository:** [GitHub - BMB_AUTOS](https://github.com/brandondlmn-alt/BMB_AUTOS)
